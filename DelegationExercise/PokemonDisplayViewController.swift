@@ -18,7 +18,7 @@ Instructions:
 
 import UIKit
 
-class PokemonDisplayViewController: UIViewController {
+class PokemonDisplayViewController: UIViewController, pokemonDelegate {
 
     @IBOutlet weak var guessedPokemon: UILabel!
     @IBOutlet weak var pokeDisplayImageVIew: UIImageView!
@@ -42,10 +42,15 @@ class PokemonDisplayViewController: UIViewController {
     // TODO: Run this function when you setup your delegate
     // Run this right when and where you receive the guessed pokemon
     // What this does: Selects a randwom pokemon - starts the guessing game
-    
     static func randomPoke() -> Pokemon {
         let index = Int(arc4random()) % pokemons.count
         return pokemons[index]
+    }
+    
+    func chosenPokemon(pokemon: Pokemon) {
+        selectedPokemon = pokemon
+        checkGuessedPokemonAndShowPokemon()
+        print(selectedPokemon)
     }
     
     func goToChoosePokemonViewController() {
@@ -56,7 +61,8 @@ class PokemonDisplayViewController: UIViewController {
         
         choosePokemonController.pokemons = PokemonDisplayViewController.pokemons
         
-        // TODO: Make sure to set the delete on the ChoosePokemonViewController
+        // TODO: Make sure to set the delegate on the ChoosePokemonViewController
+        choosePokemonController.delegate = self
         
     self.navigationController?.pushViewController(choosePokemonController, animated: true)
         

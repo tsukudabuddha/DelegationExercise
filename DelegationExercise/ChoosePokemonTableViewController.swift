@@ -4,15 +4,21 @@
 /*
  Instructions
  
- Inform the PokemonDisplayController that the user has choosed a pokemon through a delegate
+ Inform the PokemonDisplayController that the user has chosen a pokemon through a delegate
 */
 
 import UIKit
+
+protocol pokemonDelegate: class {
+    func chosenPokemon(pokemon: Pokemon)
+}
 
 class ChoosePokemonTableViewController: UITableViewController {
 
     var pokemons: [Pokemon] = []
     var selectedPokemon: Pokemon?
+    
+    weak var delegate: pokemonDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +49,8 @@ class ChoosePokemonTableViewController: UITableViewController {
         
         let selectedPokemon = pokemons[indexPath.row]
         
-        
         // TODO:  You will want to inform your delegate here that a pokemon was selected
+        delegate?.chosenPokemon(pokemon: selectedPokemon)
     }
 
 }
